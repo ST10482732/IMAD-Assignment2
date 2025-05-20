@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>QuizActivity.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+QuizActivity.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">vcmsa</span><span class="s2">.</span><span class="s1">ci</span><span class="s2">.</span><span class="s1">flashcardquiz</span>
+
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">content</span><span class="s2">.</span><span class="s1">Intent</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Bundle</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">View</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">Button</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">EditText</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">TextView</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">activity</span><span class="s2">.</span><span class="s1">enableEdgeToEdge</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">appcompat</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">AppCompatActivity</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">ViewCompat</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">WindowInsetsCompat</span>
+
+<span class="s0">class </span><span class="s1">QuizActivity : AppCompatActivity</span><span class="s2">() {</span>
+
+    <span class="s3">// Variable declarations first</span>
+    <span class="s0">var </span><span class="s1">question: TextView? </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s0">var </span><span class="s1">output: TextView? </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s0">var </span><span class="s1">trueBtn: Button? </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s0">var </span><span class="s1">falseBtn: Button? </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s0">var </span><span class="s1">nextBtn: Button? </span><span class="s2">= </span><span class="s0">null</span>
+
+    <span class="s3">// Array of questions and answers (Rao,2020)</span>
+    <span class="s0">val </span><span class="s1">questions </span><span class="s2">= </span><span class="s1">arrayOf</span><span class="s2">(</span>
+        <span class="s4">&quot;Nelson Mandela was the president in 1994.&quot;</span><span class="s2">,</span>
+        <span class="s4">&quot;World War II ended in 1943.&quot;</span><span class="s2">,</span>
+        <span class="s4">&quot;The American Declaration of Independence was signed in 1776.&quot;</span><span class="s2">,</span>
+        <span class="s4">&quot;The Industrial Revolution began in Germany.&quot;</span><span class="s2">,</span>
+        <span class="s4">&quot;The French Revolution began in 1789.&quot;</span>
+    <span class="s2">)</span>
+    <span class="s0">val </span><span class="s1">answers </span><span class="s2">= </span><span class="s1">arrayOf</span><span class="s2">(</span>
+        <span class="s4">&quot;true&quot;</span><span class="s2">,   </span><span class="s3">// for questions[0]</span>
+        <span class="s4">&quot;false&quot;</span><span class="s2">,  </span><span class="s3">// for questions[1]</span>
+        <span class="s4">&quot;true&quot;</span><span class="s2">,   </span><span class="s3">// for questions[2]</span>
+        <span class="s4">&quot;false&quot;</span><span class="s2">,  </span><span class="s3">// for questions[3]</span>
+        <span class="s4">&quot;true&quot;   </span><span class="s3">// for questions[4]</span>
+    <span class="s2">)</span>
+    <span class="s0">var  </span><span class="s1">currentIndex </span><span class="s2">= </span><span class="s5">0</span>
+    <span class="s0">var </span><span class="s1">score </span><span class="s2">= </span><span class="s5">0</span>
+    <span class="s0">var </span><span class="s1">answered </span><span class="s2">= </span><span class="s0">false</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">savedInstanceState: Bundle?</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">savedInstanceState</span><span class="s2">)</span>
+        <span class="s1">enableEdgeToEdge</span><span class="s2">()</span>
+        <span class="s1">setContentView</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">layout</span><span class="s2">.</span><span class="s1">activity_quiz</span><span class="s2">)</span>
+
+        <span class="s3">// Link Ul components (Syal,2021)</span>
+        <span class="s1">question </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">&lt;</span><span class="s1">View</span><span class="s2">&gt;(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">questionTxt</span><span class="s2">) </span><span class="s0">as </span><span class="s1">TextView</span>
+        <span class="s1">output </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">&lt;</span><span class="s1">View</span><span class="s2">&gt;(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">output</span><span class="s2">) </span><span class="s0">as </span><span class="s1">TextView</span>
+        <span class="s1">trueBtn </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">&lt;</span><span class="s1">View</span><span class="s2">&gt;(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">trueBtn</span><span class="s2">) </span><span class="s0">as </span><span class="s1">Button</span>
+        <span class="s1">falseBtn </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">&lt;</span><span class="s1">View</span><span class="s2">&gt;(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">falseBtn</span><span class="s2">) </span><span class="s0">as </span><span class="s1">Button</span>
+        <span class="s1">nextBtn </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">&lt;</span><span class="s1">View</span><span class="s2">&gt;(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">nextBtn</span><span class="s2">) </span><span class="s0">as </span><span class="s1">Button</span>
+
+        <span class="s1">displayQuestion</span><span class="s2">()</span>
+
+        <span class="s1">trueBtn</span><span class="s2">!!.</span><span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s0">if </span><span class="s2">(!</span><span class="s1">answered</span><span class="s2">) </span><span class="s1">checkAnswer</span><span class="s2">(</span><span class="s4">&quot;true&quot;</span><span class="s2">)</span>
+        <span class="s2">}</span>
+        <span class="s1">falseBtn</span><span class="s2">!!.</span><span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s0">if </span><span class="s2">(!</span><span class="s1">answered</span><span class="s2">) </span><span class="s1">checkAnswer</span><span class="s2">(</span><span class="s4">&quot;false&quot;</span><span class="s2">)</span>
+          <span class="s2">}</span>
+        <span class="s1">nextBtn</span><span class="s2">!!.</span><span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s1">moveToNextQuestion</span><span class="s2">()</span>
+          <span class="s2">}</span>
+        <span class="s2">}</span>
+
+        <span class="s3">// Display current question</span>
+        <span class="s0">fun </span><span class="s1">displayQuestion</span><span class="s2">() {</span>
+            <span class="s1">question</span><span class="s2">!!.</span><span class="s1">text </span><span class="s2">= </span><span class="s1">questions</span><span class="s2">[</span><span class="s1">currentIndex</span><span class="s2">]</span>
+            <span class="s1">output</span><span class="s2">!!.</span><span class="s1">text </span><span class="s2">= </span><span class="s4">&quot;&quot;</span>
+            <span class="s1">nextBtn</span><span class="s2">!!.</span><span class="s1">visibility </span><span class="s2">= </span><span class="s1">View</span><span class="s2">.</span><span class="s1">GONE</span>
+            <span class="s1">answered </span><span class="s2">= </span><span class="s0">false</span>
+
+        <span class="s2">}</span>
+
+        <span class="s3">// Check answer and show feedback (Martin,2008)</span>
+        <span class="s0">fun </span><span class="s1">checkAnswer</span><span class="s2">(</span><span class="s1">userAnswer : String</span><span class="s2">) {</span>
+            <span class="s1">answered </span><span class="s2">= </span><span class="s0">true</span>
+            <span class="s0">val </span><span class="s1">correctAnswer </span><span class="s2">= </span><span class="s1">answers</span><span class="s2">[</span><span class="s1">currentIndex</span><span class="s2">]</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">userAnswer </span><span class="s2">== </span><span class="s1">correctAnswer</span><span class="s2">) {</span>
+                <span class="s1">output</span><span class="s2">!!.</span><span class="s1">text </span><span class="s2">= </span><span class="s4">&quot;Correct!&quot; </span><span class="s3">// Provide feedback (Martin,2008)</span>
+                <span class="s1">score</span><span class="s2">++</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">output</span><span class="s2">!!.</span><span class="s1">text </span><span class="s2">= </span><span class="s4">&quot;Incorrect&quot;</span>
+            <span class="s2">}</span>
+
+            <span class="s3">// Show next button after answering</span>
+            <span class="s1">nextBtn</span><span class="s2">!!.</span><span class="s1">visibility </span><span class="s2">= </span><span class="s1">View</span><span class="s2">.</span><span class="s1">VISIBLE</span>
+        <span class="s2">}</span>
+            <span class="s3">// Move to the next question (Android Developers,2023)</span>
+             <span class="s0">fun </span><span class="s1">moveToNextQuestion</span><span class="s2">() {</span>
+                 <span class="s1">currentIndex</span><span class="s2">++</span>
+
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">currentIndex </span><span class="s2">&lt; </span><span class="s1">questions</span><span class="s2">.</span><span class="s1">size</span><span class="s2">) {</span>
+                <span class="s1">displayQuestion</span><span class="s2">()</span>
+            <span class="s2">}</span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s0">val </span><span class="s1">intent </span><span class="s2">= </span><span class="s1">Intent</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">ScoreActivity::</span><span class="s0">class</span><span class="s2">.</span><span class="s1">java</span><span class="s2">)</span>
+                <span class="s1">intent</span><span class="s2">.</span><span class="s1">putExtra</span><span class="s2">(</span><span class="s4">&quot;score&quot;</span><span class="s2">, </span><span class="s1">score</span><span class="s2">)</span>
+                <span class="s1">intent</span><span class="s2">.</span><span class="s1">putExtra</span><span class="s2">(</span><span class="s4">&quot;questions&quot;</span><span class="s2">, </span><span class="s1">questions</span><span class="s2">)</span>
+                <span class="s1">intent</span><span class="s2">.</span><span class="s1">putExtra</span><span class="s2">(</span><span class="s4">&quot;answers&quot;</span><span class="s2">, </span><span class="s1">answers</span><span class="s2">)</span>
+                <span class="s1">startActivity</span><span class="s2">(</span><span class="s1">intent</span><span class="s2">)</span>
+                <span class="s1">finish</span><span class="s2">()</span>
+            <span class="s2">}</span>
+        <span class="s1">ViewCompat</span><span class="s2">.</span><span class="s1">setOnApplyWindowInsetsListener</span><span class="s2">(</span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">main</span><span class="s2">)) { </span><span class="s1">v</span><span class="s2">, </span><span class="s1">insets </span><span class="s2">-&gt;</span>
+            <span class="s0">val </span><span class="s1">systemBars </span><span class="s2">= </span><span class="s1">insets</span><span class="s2">.</span><span class="s1">getInsets</span><span class="s2">(</span><span class="s1">WindowInsetsCompat</span><span class="s2">.</span><span class="s1">Type</span><span class="s2">.</span><span class="s1">systemBars</span><span class="s2">())</span>
+            <span class="s1">v</span><span class="s2">.</span><span class="s1">setPadding</span><span class="s2">(</span><span class="s1">systemBars</span><span class="s2">.</span><span class="s1">left</span><span class="s2">, </span><span class="s1">systemBars</span><span class="s2">.</span><span class="s1">top</span><span class="s2">, </span><span class="s1">systemBars</span><span class="s2">.</span><span class="s1">right</span><span class="s2">, </span><span class="s1">systemBars</span><span class="s2">.</span><span class="s1">bottom</span><span class="s2">)</span>
+            <span class="s1">insets</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>
