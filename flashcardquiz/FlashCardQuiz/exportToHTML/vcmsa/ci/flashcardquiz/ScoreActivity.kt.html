@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>ScoreActivity.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ScoreActivity.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">vcmsa</span><span class="s2">.</span><span class="s1">ci</span><span class="s2">.</span><span class="s1">flashcardquiz</span>
+
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">os</span><span class="s2">.</span><span class="s1">Bundle</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">View</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">Button</span>
+<span class="s1">import android</span><span class="s2">.</span><span class="s1">widget</span><span class="s2">.</span><span class="s1">TextView</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">activity</span><span class="s2">.</span><span class="s1">enableEdgeToEdge</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">appcompat</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">AlertDialog</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">appcompat</span><span class="s2">.</span><span class="s1">app</span><span class="s2">.</span><span class="s1">AppCompatActivity</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">ViewCompat</span>
+<span class="s1">import androidx</span><span class="s2">.</span><span class="s1">core</span><span class="s2">.</span><span class="s1">view</span><span class="s2">.</span><span class="s1">WindowInsetsCompat</span>
+
+<span class="s0">class </span><span class="s1">ScoreActivity : AppCompatActivity</span><span class="s2">() {</span>
+
+    <span class="s0">var </span><span class="s1">scoreTxt: TextView? </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s0">var </span><span class="s1">feedback: TextView? </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s0">var </span><span class="s1">reviewAns: TextView? </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s0">var </span><span class="s1">exit: Button? </span><span class="s2">= </span><span class="s0">null</span>
+    <span class="s0">var </span><span class="s1">review: Button? </span><span class="s2">= </span><span class="s0">null</span>
+
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">savedInstanceState: Bundle?</span><span class="s2">) {</span>
+        <span class="s0">super</span><span class="s2">.</span><span class="s1">onCreate</span><span class="s2">(</span><span class="s1">savedInstanceState</span><span class="s2">)</span>
+        <span class="s1">enableEdgeToEdge</span><span class="s2">()</span>
+        <span class="s1">setContentView</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">layout</span><span class="s2">.</span><span class="s1">activity_score</span><span class="s2">)</span>
+
+        <span class="s1">scoreTxt </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">&lt;</span><span class="s1">View</span><span class="s2">&gt;(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">scoreTxt</span><span class="s2">) </span><span class="s0">as </span><span class="s1">TextView</span>
+        <span class="s1">feedback </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">&lt;</span><span class="s1">View</span><span class="s2">&gt;(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">feedbacktxt</span><span class="s2">) </span><span class="s0">as </span><span class="s1">TextView</span>
+        <span class="s1">reviewAns </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">&lt;</span><span class="s1">View</span><span class="s2">&gt;(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">reviewAns</span><span class="s2">) </span><span class="s0">as </span><span class="s1">TextView</span>
+        <span class="s1">exit </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">&lt;</span><span class="s1">View</span><span class="s2">&gt;(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">exitBtn</span><span class="s2">) </span><span class="s0">as </span><span class="s1">Button</span>
+        <span class="s1">review </span><span class="s2">= </span><span class="s1">findViewById</span><span class="s2">&lt;</span><span class="s1">View</span><span class="s2">&gt;(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">reviewBtn</span><span class="s2">) </span><span class="s0">as </span><span class="s1">Button</span>
+
+        <span class="s0">val </span><span class="s1">score </span><span class="s2">= </span><span class="s1">intent</span><span class="s2">.</span><span class="s1">getIntExtra</span><span class="s2">(</span><span class="s3">&quot;score&quot;</span><span class="s2">, </span><span class="s4">0</span><span class="s2">)</span>
+        <span class="s0">val </span><span class="s1">questions </span><span class="s2">= </span><span class="s1">intent</span><span class="s2">.</span><span class="s1">getStringArrayExtra</span><span class="s2">(</span><span class="s3">&quot;questions&quot;</span><span class="s2">)</span>
+        <span class="s0">val </span><span class="s1">answers </span><span class="s2">= </span><span class="s1">intent</span><span class="s2">.</span><span class="s1">getStringArrayExtra</span><span class="s2">(</span><span class="s3">&quot;answers&quot;</span><span class="s2">)</span>
+
+        <span class="s1">scoreTxt</span><span class="s2">!!.</span><span class="s1">text </span><span class="s2">= </span><span class="s3">&quot;Your Score: </span><span class="s0">$</span><span class="s1">score </span><span class="s3">/ </span><span class="s0">${</span><span class="s1">questions</span><span class="s2">!!.</span><span class="s1">size</span><span class="s0">}</span><span class="s3">&quot;</span>
+
+        <span class="s5">// Provide feedback based on score (Deitel,2020)</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">score </span><span class="s2">&lt; </span><span class="s4">3</span><span class="s2">) {</span>
+            <span class="s1">feedback</span><span class="s2">!!.</span><span class="s1">text </span><span class="s2">= </span><span class="s3">&quot;Keep practicing!&quot;</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">score </span><span class="s2">&lt; </span><span class="s4">5</span><span class="s2">) {</span>
+            <span class="s1">feedback</span><span class="s2">!!.</span><span class="s1">text </span><span class="s2">= </span><span class="s3">&quot;Good job!&quot;</span>
+        <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+            <span class="s1">feedback</span><span class="s2">!!.</span><span class="s1">text </span><span class="s2">= </span><span class="s3">&quot;Excellent!&quot;</span>
+        <span class="s2">}</span>
+       <span class="s5">// Show review in a scrollable TextView (Hardy,2021)</span>
+        <span class="s1">review</span><span class="s2">!!.</span><span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s0">val </span><span class="s1">reviewBuilder </span><span class="s2">= </span><span class="s1">StringBuilder</span><span class="s2">()</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">questions </span><span class="s2">!= </span><span class="s0">null </span><span class="s2">&amp;&amp; </span><span class="s1">answers </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+                <span class="s0">for </span><span class="s2">(</span><span class="s1">i </span><span class="s0">in </span><span class="s1">questions</span><span class="s2">.</span><span class="s1">indices</span><span class="s2">) {</span>
+                    <span class="s1">reviewBuilder</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span><span class="s3">&quot;Q</span><span class="s0">${</span><span class="s1">i </span><span class="s2">+ </span><span class="s4">1</span><span class="s0">}</span><span class="s3">: </span><span class="s0">${</span><span class="s1">questions</span><span class="s2">[</span><span class="s1">i</span><span class="s2">]</span><span class="s0">}\n</span><span class="s3">&quot;</span><span class="s2">)</span>
+                    <span class="s1">reviewBuilder</span><span class="s2">.</span><span class="s1">append</span><span class="s2">(</span><span class="s3">&quot;Answer : </span><span class="s0">${</span><span class="s1">answers</span><span class="s2">[</span><span class="s1">i</span><span class="s2">]</span><span class="s0">}\n\n</span><span class="s3">&quot;</span><span class="s2">)</span>
+                <span class="s2">}</span>
+            <span class="s5">// Setting the built string to the textview (Hardy,2021)</span>
+            <span class="s1">reviewAns</span><span class="s2">!!.</span><span class="s1">text </span><span class="s2">= </span><span class="s1">reviewBuilder</span><span class="s2">.</span><span class="s1">toString</span><span class="s2">()</span>
+            <span class="s1">reviewAns</span><span class="s2">!!.</span><span class="s1">visibility </span><span class="s2">= </span><span class="s1">View</span><span class="s2">.</span><span class="s1">VISIBLE</span>
+        <span class="s2">}</span>
+        <span class="s5">// Exit button closes the app (Android Developers,2023)</span>
+        <span class="s1">exit</span><span class="s2">!!.</span><span class="s1">setOnClickListener </span><span class="s2">{</span>
+            <span class="s1">finishAffinity</span><span class="s2">()      </span><span class="s5">// Close the entire app</span>
+        <span class="s2">}</span>
+
+    <span class="s2">}</span>
+        <span class="s1">ViewCompat</span><span class="s2">.</span><span class="s1">setOnApplyWindowInsetsListener</span><span class="s2">(</span><span class="s1">findViewById</span><span class="s2">(</span><span class="s1">R</span><span class="s2">.</span><span class="s1">id</span><span class="s2">.</span><span class="s1">main</span><span class="s2">)) { </span><span class="s1">v</span><span class="s2">, </span><span class="s1">insets </span><span class="s2">-&gt;</span>
+            <span class="s0">val </span><span class="s1">systemBars </span><span class="s2">= </span><span class="s1">insets</span><span class="s2">.</span><span class="s1">getInsets</span><span class="s2">(</span><span class="s1">WindowInsetsCompat</span><span class="s2">.</span><span class="s1">Type</span><span class="s2">.</span><span class="s1">systemBars</span><span class="s2">())</span>
+            <span class="s1">v</span><span class="s2">.</span><span class="s1">setPadding</span><span class="s2">(</span><span class="s1">systemBars</span><span class="s2">.</span><span class="s1">left</span><span class="s2">, </span><span class="s1">systemBars</span><span class="s2">.</span><span class="s1">top</span><span class="s2">, </span><span class="s1">systemBars</span><span class="s2">.</span><span class="s1">right</span><span class="s2">, </span><span class="s1">systemBars</span><span class="s2">.</span><span class="s1">bottom</span><span class="s2">)</span>
+            <span class="s1">insets</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>
